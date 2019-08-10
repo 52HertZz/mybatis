@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<!-- mybatis的主配置文件 -->
+<configuration>
+
+    <properties resource="jdbc.properties"></properties>
+
+    <typeAliases>
+        <!-- 定义单个pojo类别名
+        type:类的全路劲名称
+        alias:别名
+         -->
+        <!-- 		<typeAlias type="cn.itheima.pojo.User" alias="user"/> -->
+
+        <!-- 使用包扫描的方式批量定义别名
+        定以后别名等于类名,不区分大小写,但是建议按照java命名规则来,首字母小写,以后每个单词的首字母大写
+        -->
+        <package name="com.hnisc.pojo"/>
+    </typeAliases>
+
+    <!-- 和spring整合后 environments配置将废除-->
+    <!-- 配置环境 -->
+    <environments default="mysql">
+        <!-- 配置mysql的环境 -->
+        <environment id="mysql">
+            <!-- 配置事务类型 -->
+            <transactionManager type="JDBC"></transactionManager>
+            <!-- 配置数据库连接池-->
+            <dataSource type="POOLED">
+                <!-- 配置连接数据库的4个基本信息-->
+                <property name="driver" value="${jdbc.driver}" />
+                <property name="url" value="${jdbc.url}" />
+                <property name="username" value="${jdbc.username}" />
+                <property name="password" value="${jdbc.password}" />
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!-- 指定映射配置文件的位置 -->
+    <mappers>
+        <mapper resource="com/hnisc/pojo/User.xml"/>
+
+        <!--
+		使用class属性引入接口的全路径名称:
+		使用规则:
+			1. 接口的名称和映射文件名称除扩展名外要完全相同
+			2. 接口和映射文件要放在同一个目录下
+		 -->
+        <!-- <mapper class="com.hnisc.mapper.UserMapper"/> -->
+
+        <!-- 使用包扫描的方式批量引入Mapper接口
+				使用规则:
+				1. 接口的名称和映射文件名称除扩展名外要完全相同
+				2. 接口和映射文件要放在同一个目录下
+		-->
+        <package name="com.hnisc.mapper"/>
+
+    </mappers>
+</configuration>
